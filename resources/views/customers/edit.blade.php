@@ -1,5 +1,4 @@
-@extends('dash.blank')
-@section('content')
+<div class="container">
 <h1> Edit customers</h1>
   
 <form action="{{ route('customers.update', $customers->id) }}" method="POST" enctype="multipart/form-data">
@@ -9,9 +8,4 @@
         'button_label' => 'Edit Customer'
     ])
 </form>
-@endsection
-
-{{-- @extends('dash.blank')
-@section('content')
-<h1>Hi</h1>
-@endsection --}}
+</div>

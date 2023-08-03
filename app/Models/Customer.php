@@ -12,16 +12,16 @@ class Customer extends Model
 {
     use HasFactory;
     protected $fillable = [
-    'first_name' ,'last_name','phone_number',
-    'city','country','user_id'
+        'first_name', 'last_name', 'phone_number',
+        'city', 'country', 'user_id'
     ];
-public static function boot()
-{
-    parent::boot();
-    static::creating(function (Customer $customer) {
-        $customer->user_id =Auth::id();
-    });
-} 
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function (Customer $customer) {
+            $customer->user_id = Auth::id();
+        });
+    }
 
 
     public function scopeUser(Builder $query)
@@ -31,13 +31,15 @@ public static function boot()
 
     public function getFullNameAttribute()
     {
-            return strtoupper($this->first_name ." ". $this->last_name);
+        return strtoupper($this->first_name . " " . $this->last_name);
     }
 
-    public function scopeFilter($query , array $filters)
+    public function scopeFilter($query, array $filters)
     {
-            $query->where('first_name', 'like','%' .request('search').'%')
-            ->orWhere('last_name', 'like','%' .request('search').'%');
-        
+        if ($filters['search'] ?? false) {
+
+            $query->where('first_name', 'like', '%' . request('search') . '%')
+                ->orWhere('last_name', 'like', '%' . request('search') . '%');
+        }
     }
 }

@@ -72,22 +72,7 @@ class CustomersController extends Controller
     public function update(CustomerRequest $request ,string $id)
     {
         
-        $validated = $request->validate( [
-            'first_name' => ['required','string','max:255', function($attribute,$value ,$fail){
-            if ($value == 'admin'){
-               return $fail('This :attribute value is forbidden!');
-            }
-       }],
-        'last_name' => ['required','string','max:255', function($attribute,$value ,$fail){
-        if ($value == 'admin'){
-           return $fail('This :attribute value is forbidden!');
-        }
-   }],
-       'city' => 'nullable|string|max:255',
-       'country' => 'nullable|string|max:255',
-       'phone_number' => 'required|string|max:255',
-
-    ]);
+        $validated = $request->validated();
         $customers = Customer::user()->findOrFail($id);
         // dd($customers);
         $customers->update($validated);
